@@ -1,3 +1,4 @@
+import 'package:contacts/android/views/home.view.dart';
 import 'package:contacts/models/contact.model.dart';
 import 'package:contacts/repositories/contact.repository.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,47 @@ class _EditorContactViewState extends State<EditorContactView> {
   final _scaffoldKey = new GlobalKey<ScaffoldState>();
   final _formKey = new GlobalKey<FormState>();
   final _repository = ContactRepository();
+
+  onSubmit() {
+    if (!_formKey.currentState!.validate()) {
+      return;
+    }
+
+    // user caso o evento para alterar o modelo seja onSaved:
+    //_formKey.currentState.save();
+    if (widget.model.id == 0) {
+      create();
+    } else {
+      update();
+    }
+  }
+
+  create() {
+    _repository
+        .create(widget.model)
+        .then(
+          (value) => onSuccess(),
+        )
+        .catchError((_) => {onError()});
+  }
+
+  update() {}
+  onSuccess() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => HomeView(),
+      ),
+    );
+  }
+
+  onError() {
+    final snackBar = SnackBar(
+      content: Text('Ops, algo deu errado!'),
+    );
+
+    _scaffoldKey.currentState!.showSnackBar(snackBar);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,21 +77,54 @@ class _EditorContactViewState extends State<EditorContactView> {
           child: Column(
             children: <Widget>[
               TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Nome',
+                ),
+                keyboardType: TextInputType.text,
                 initialValue: widget.model.name,
-                onSaved: (val) {
+                onChanged: (val) {
                   widget.model.name = val;
                 },
-              ),
-              TextFormField(
-                initialValue: widget.model.phone,
-                onSaved: (val) {
-                  widget.model.phone = val;
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Nome inválido';
+                  }
+
+                  return null;
                 },
               ),
               TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Telefone',
+                ),
+                keyboardType: TextInputType.number,
+                initialValue: widget.model.phone,
+                onChanged: (val) {
+                  widget.model.phone = val;
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Telefone inválido';
+                  }
+
+                  return null;
+                },
+              ),
+              TextFormField(
+                decoration: InputDecoration(
+                  labelText: 'Email',
+                ),
+                keyboardType: TextInputType.emailAddress,
                 initialValue: widget.model.email,
-                onSaved: (val) {
+                onChanged: (val) {
                   widget.model.email = val;
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Email inválido';
+                  }
+
+                  return null;
                 },
               ),
               SizedBox(
@@ -61,7 +136,7 @@ class _EditorContactViewState extends State<EditorContactView> {
                 child: TextButton.icon(
                   icon: Icon(Icons.save),
                   label: Text("Salvar"),
-                  onPressed: () {},
+                  onPressed: onSubmit,
                 ),
               ),
             ],
