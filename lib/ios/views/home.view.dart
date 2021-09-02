@@ -47,8 +47,8 @@ class HomeView extends StatelessWidget {
                               height: 48,
                               decoration: BoxDecoration(
                                 image: DecorationImage(
-                                  image: NetworkImage(
-                                      "https://balta.io/imgs/andrebaltieri.jpg"),
+                                  image: AssetImage(
+                                      'assets/images/profile-picture.png'),
                                 ),
                                 borderRadius: BorderRadius.circular(48),
                               ),

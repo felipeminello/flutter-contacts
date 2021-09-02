@@ -53,8 +53,7 @@ class DetailsView extends StatelessWidget {
                     height: 100,
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage(
-                            "https://balta.io/imgs/andrebaltieri.jpg"),
+                        image: AssetImage('assets/images/profile-picture.png'),
                       ),
                       borderRadius: BorderRadius.circular(100),
                     ),
