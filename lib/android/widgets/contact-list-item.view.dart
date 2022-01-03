@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:contacts/android/views/details.view.dart';
 import 'package:contacts/models/contact.model.dart';
 import 'package:flutter/material.dart';
@@ -18,13 +19,14 @@ class ContactListItem extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(48),
           image: DecorationImage(
-            image: AssetImage('assets/images/profile-picture.png'),
-            // image: model.image == null
-            // ? AssetImage('assets/images/profile-picture.png')
-            // : FileImage(
-            //     File(model.image ?? ''),
-            //   )
-            // as ImageProvider,
+            fit: BoxFit.cover,
+            // image: AssetImage('assets/images/profile-picture.png'),
+            image: model.image == null
+            ? AssetImage('assets/images/profile-picture.png')
+            : FileImage(
+                File(model.image ?? ''),
+              )
+            as ImageProvider,
           ),
         ),
       ),

@@ -126,6 +126,8 @@ class ContactRepository {
     try {
       final Database db = await _getDatabase();
 
+      log('update: ${model.toMap()}');
+
       await db.update(
         TABLE_NAME,
         model.toMap(),

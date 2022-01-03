@@ -13,7 +13,7 @@ class ContactModel {
     this.name = "",
     this.email = "",
     this.phone = "",
-    this.image = "assets/images/profile-picture.png",
+    this.image = "",
     this.addressLine1 = "",
     this.addressLine2 = "",
     this.latLng = "",

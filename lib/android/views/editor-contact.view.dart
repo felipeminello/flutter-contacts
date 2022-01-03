@@ -32,6 +32,9 @@ class _EditorContactViewState extends State<EditorContactView> {
   }
 
   create() {
+    widget.model.id = null;
+    widget.model.image = null;
+
     _repository
         .create(widget.model)
         .then(
@@ -40,7 +43,14 @@ class _EditorContactViewState extends State<EditorContactView> {
         .catchError((_) => {onError()});
   }
 
-  update() {}
+  update() {
+    _repository.update(widget.model).then((_) {
+      onSuccess();
+    }).catchError((_) {
+      onError();
+    });
+  }
+
   onSuccess() {
     Navigator.push(
       context,
@@ -51,10 +61,16 @@ class _EditorContactViewState extends State<EditorContactView> {
   }
 
   onError() {
+    // ScaffoldMessenger.of(context).showSnackBar(
+    //   const SnackBar(
+    //     content: Text('Ops, algo deu errado!'),
+    //   ),
+    // );
+
     final snackBar = SnackBar(
       content: Text('Ops, algo deu errado!'),
     );
-
+    
     _scaffoldKey.currentState!.showSnackBar(snackBar);
   }
 
@@ -81,6 +97,7 @@ class _EditorContactViewState extends State<EditorContactView> {
                   labelText: 'Nome',
                 ),
                 keyboardType: TextInputType.text,
+                textCapitalization: TextCapitalization.words,
                 initialValue: widget.model.name,
                 onChanged: (val) {
                   widget.model.name = val;
