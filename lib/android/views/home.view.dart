@@ -1,24 +1,26 @@
 import 'package:contacts/android/views/details.view.dart';
 import 'package:contacts/android/views/editor-contact.view.dart';
+import 'package:contacts/android/widgets/search-appbar.widget.dart';
+import 'package:contacts/controllers/home.controller.dart';
 import 'package:contacts/models/contact.model.dart';
 import 'package:flutter/material.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  final controller = HomeController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        title: Text("Meus Contatos"),
-        centerTitle: true,
-        leading: TextButton(
-          onPressed: () {},
-          child: Icon(
-            Icons.search,
-            color: Theme.of(context).primaryColor,
-          ),
+      appBar: PreferredSize(
+        child: SearchAppBar(
+          controller: controller,
         ),
+        preferredSize: Size.fromHeight(kToolbarHeight),
       ),
       body: ListView(
         children: <Widget>[

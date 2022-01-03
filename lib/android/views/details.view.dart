@@ -90,16 +90,23 @@ class DetailsView extends StatelessWidget {
                   color: Theme.of(context).accentColor,
                 ),
               ),
-              FlatButton(
-                onPressed: () {},
-                color: Theme.of(context).primaryColor,
-                shape: CircleBorder(
-                  side: BorderSide.none,
-                ),
-                child: Icon(
-                  Icons.camera_enhance,
-                  color: Theme.of(context).accentColor,
-                ),
+              Material(
+                color: Colors.white,
+                child: Center(
+                  child: Ink(
+                    decoration: ShapeDecoration(
+                      color: Theme.of(context).primaryColor,
+                      shape: CircleBorder(
+                        side: BorderSide.none,
+                      ),
+                    ),
+                    child: IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.camera_enhance),
+                      color: Colors.white,
+                    ),
+                  ),
+                )
               ),
             ],
           ),
