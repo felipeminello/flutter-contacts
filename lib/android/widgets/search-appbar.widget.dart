@@ -15,12 +15,31 @@ class SearchAppBar extends StatelessWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       title: Observer(
-        builder: (_) =>
-          controller.showSearch ? TextFormField() : Text('Meus contatos'),
+        builder: (_) => controller.showSearch
+            ? TextField(
+                autofocus: true,
+                decoration: InputDecoration(
+                  labelText: 'Pesquisar...',
+                ),
+                onSubmitted: (value) {
+                  controller.search(value);
+                },
+              )
+            : Text(
+                'Meus contatos',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
       ),
       centerTitle: true,
       leading: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          if (controller.showSearch) {
+            controller.search('');
+          }
+          controller.toggleSearch();
+        },
         child: Observer(
           builder: (_) => Icon(
             controller.showSearch ? Icons.close : Icons.search,

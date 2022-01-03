@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:contacts/models/contact.model.dart';
 import 'package:contacts/settings.dart';
 import 'package:path/path.dart';
@@ -17,6 +19,8 @@ class ContactRepository {
   Future create(ContactModel model) async {
     try {
       final Database db = await _getDatabase();
+
+      log('model, ${model.toMap()}');
 
       await db.insert(
         TABLE_NAME,
@@ -66,6 +70,8 @@ class ContactRepository {
           '%$term%',
         ],
       );
+
+      log('maps: $maps');
 
       return List.generate(
         maps.length,
